@@ -1,0 +1,50 @@
+allprojects {
+    repositories {
+        maven { url "https://jitpack.io" }
+        maven { url "https://maven.aliyun.com/repository/public" }
+
+        mavenCentral()
+        maven {
+            allowInsecureProtocol true
+            url 'https://maven.aliyun.com/repository/releases'
+        }
+        maven {
+            allowInsecureProtocol true
+            url 'https://maven.aliyun.com/repository/jcenter'
+        }
+        maven {
+            allowInsecureProtocol true
+            url 'https://maven.aliyun.com/repository/google'
+        }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url 'https://maven.aliyun.com/nexus/content/repositories/jcenter' }  //阿里的jcenter
+        maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }  //阿里的mavenCentral
+        maven {
+            url 'https://mirrors.huaweicloud.com/repository/maven/'
+        }
+        maven {
+            url 'https://maven.aliyun.com/nexus/content/repositories/google'
+            name 'Google'
+        }  //阿里google
+        gradlePluginPortal()
+//        google()
+
+        maven { url 'https://oss.jfrog.org/libs-snapshot' }
+
+//        google()
+//        mavenCentral()
+    }
+}
+
+rootProject.buildDir = "../build"
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(":app")
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
