@@ -15,84 +15,61 @@ class ViewPagerDemoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).primaryColorDark,
-      appBar: AppBar(
-        title: const Text("ViewPagerDemoPage"),
-      ),
+      backgroundColor: Theme
+          .of(context)
+          .primaryColorDark,
       body: Container(
-        alignment: Alignment.topCenter,
+        alignment: Alignment.topLeft,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
+          children: [
+          Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              margin: const EdgeInsets.only(left: 20, top: 30),
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: Colors.white,
+                  width: 3.0,
+                ),
+              ),
+              child: ClipOval(
+                child: Image.network(
+                    "https://uploads-oss.xstudyedu.com/client/padmanageservice/test/56b3ad5ab369-44e1-8cb9-faa546491a361714390088909.png",
+                    fit: BoxFit.cover,
+                    width: 80,
+                    height: 80, errorBuilder: (context, url, error) {
+                  return Image.asset("assets/pic_tx_default.png",
+                      width: 80, height: 80, fit: BoxFit.cover);
+                }),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 30, left: 20),
+              child: Text(
+                "name", style: TextStyle(color: Colors.black, fontSize: 20),
+              ),
+              // Text(
+              //   "name",
+              //   style: TextStyle(color: Colors.black, fontSize: 20),
+              ),
+              ],
+            ),
+            // 圆形头像 - 加载网络图片
+
+
+            const SizedBox(height: 20),
             Expanded(
               child: TransformerPageView(
                   loop: false,
                   controller: IndexController(),
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                          color: colorList[index % colorList.length],
-                          border: Border.all(color: Colors.white)),
-                      child: Center(
-                        child: Text(
-                          "$index",
-                          style: const TextStyle(
-                              fontSize: 80.0, color: Colors.white),
-                        ),
-                      ),
-                    );
-                  },
-                  itemCount: 3),
-            ),
-            Expanded(
-              child: TransformerPageView(
-                  loop: true,
-                  controller: IndexController(),
-                  transformer: AccordionTransformer(),
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                          color: colorList[index % colorList.length],
-                          border: Border.all(color: Colors.white)),
-                      child: Center(
-                        child: Text(
-                          "$index",
-                          style: const TextStyle(
-                              fontSize: 80.0, color: Colors.white),
-                        ),
-                      ),
-                    );
-                  },
-                  itemCount: 3),
-            ),
-            Expanded(
-              child: TransformerPageView(
-                  loop: true,
-                  controller: IndexController(),
-                  transformer: ThreeDTransformer(),
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                          color: colorList[index % colorList.length],
-                          border: Border.all(color: Colors.white)),
-                      child: Center(
-                        child: Text(
-                          "$index",
-                          style: const TextStyle(
-                              fontSize: 80.0, color: Colors.white),
-                        ),
-                      ),
-                    );
-                  },
-                  itemCount: 3),
-            ),
-            Expanded(
-              child: TransformerPageView(
-                  loop: true,
-                  controller: IndexController(),
-                  transformer: DeepthPageTransformer(),
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
                       decoration: BoxDecoration(
