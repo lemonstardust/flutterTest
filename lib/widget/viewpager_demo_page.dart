@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'dart:math' as Math;
 import 'package:another_transformer_page_view/another_transformer_page_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:vector_math/vector_math_64.dart' as vector;
 
 class ViewPagerDemoPage extends StatelessWidget {
@@ -38,6 +40,38 @@ class _PageViewState extends State<PageView> {
 
   int _curIndex = 0;
 
+  int _clickCount = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _readCounter().then((ccc) {
+      _clickCount = ccc;
+    });
+  }
+
+  Future<File> _getLocalFile() async {
+    String dir = (await getApplicationDocumentsDirectory()).path;
+    return new File("$dir/counter.txt");
+  }
+
+  Future<int> _readCounter() async {
+    try {
+      final file = await _getLocalFile();
+      String contents = await file.readAsString();
+      return int.parse(contents);
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  Future<Null> _incrementCounter() async {
+    setState(() {
+      _clickCount++;
+    });
+    await (await _getLocalFile()).writeAsString('$_clickCount');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,16 +98,22 @@ class _PageViewState extends State<PageView> {
                       width: 3.0,
                     ),
                   ),
-                  child: ClipOval(
-                    child: Image.network(
-                        "https://uploads-oss.xstudyedu.com/client/padmanageservice/test/56b3ad5ab369-44e1-8cb9-faa546491a361714390088909.png",
-                        fit: BoxFit.cover,
-                        width: 80,
-                        height: 80, errorBuilder: (context, url, error) {
-                      return Image.asset("assets/pic_tx_default.png",
-                          width: 80, height: 80, fit: BoxFit.cover);
-                    }),
-                  ),
+                  child: InkWell(
+                      onTap: () {
+                        _incrementCounter();
+                        print("click head icon $_clickCount times");
+                      },
+                      splashFactory: NoSplash.splashFactory,
+                      child: ClipOval(
+                        child: Image.network(
+                            "https://uploads-oss.xstudyedu.com/client/padmanageservice/test/56b3ad5ab369-44e1-8cb9-faa546491a361714390088909.png",
+                            fit: BoxFit.cover,
+                            width: 80,
+                            height: 80, errorBuilder: (context, url, error) {
+                          return Image.asset("assets/pic_tx_default.png",
+                              width: 80, height: 80, fit: BoxFit.cover);
+                        }),
+                      )),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 30, left: 20),

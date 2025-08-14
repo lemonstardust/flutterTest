@@ -32,8 +32,8 @@ allprojects {
 
         maven { url 'https://oss.jfrog.org/libs-snapshot' }
 
-//        google()
-//        mavenCentral()
+        google()
+        mavenCentral()
     }
 }
 

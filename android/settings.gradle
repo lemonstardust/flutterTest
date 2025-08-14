@@ -38,8 +38,8 @@ pluginManagement {
             name 'Google'
         }  //阿里google
         gradlePluginPortal()
-//        google()
-//        mavenCentral()
+        google()
+        mavenCentral()
 //        gradlePluginPortal()
     }
 }
